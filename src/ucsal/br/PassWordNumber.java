@@ -1,7 +1,8 @@
 package ucsal.br;
-import java.util.Random;
 
-public class PassNumber implements Pass {
+import java.security.SecureRandom;
+
+public class PassWordNumber implements Pass {
   private String senha;
   private int tentativasRestantes;
   private int numeroTentativas;
@@ -28,39 +29,19 @@ public class PassNumber implements Pass {
   }
 
   public String geraSenha(int comprimento) {
-    Random gerador = new Random();
     senha = "";
-    int numero;
-    while (senha.length() < 4) {
-      numero = gerador.nextInt(8);
+    String caracteres = "abcdefghijklmnopqrstuvwxyz0123456789";
+    SecureRandom random = new SecureRandom();
+    StringBuilder senha = new StringBuilder();
 
-      if (senha.length() == 0) {
-        senha = senha + numero;
-      } else {
-
-        boolean setNumero = true;
-        for (int i = 0; i < senha.length(); i++) {
-
-          if (Character.getNumericValue(senha.charAt(i)) == numero) {
-
-            setNumero = false;
-
-            break;
-
-          }
-
-        }
-
-        if (setNumero) {
-
-          senha = senha + numero;
-
-        }
-      }
-
+    for (int i = 0; i < comprimento; i++) {
+      int indice = random.nextInt(caracteres.length());
+      senha.append(caracteres.charAt(indice));
     }
 
-    return senha;
+    this.senha = senha.toString();
+
+    return senha.toString();
   }
 
   public String palpitaSenha(String tentativa) {

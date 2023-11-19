@@ -1,7 +1,8 @@
 package ucsal.br;
+
 import java.util.Random;
 
-public class PassNumber implements Pass {
+public class PassWord implements Pass {
   private String senha;
   private int tentativasRestantes;
   private int numeroTentativas;
@@ -30,18 +31,18 @@ public class PassNumber implements Pass {
   public String geraSenha(int comprimento) {
     Random gerador = new Random();
     senha = "";
-    int numero;
+    String letra;
     while (senha.length() < 4) {
-      numero = gerador.nextInt(8);
+      letra = String.valueOf((char) (gerador.nextInt(26) + 'a'));
 
       if (senha.length() == 0) {
-        senha = senha + numero;
+        senha = senha + letra;
       } else {
 
         boolean setNumero = true;
         for (int i = 0; i < senha.length(); i++) {
 
-          if (Character.getNumericValue(senha.charAt(i)) == numero) {
+          if (senha.charAt(i) == letra.charAt(0)) {
 
             setNumero = false;
 
@@ -53,13 +54,12 @@ public class PassNumber implements Pass {
 
         if (setNumero) {
 
-          senha = senha + numero;
+          senha = senha + letra;
 
         }
       }
 
     }
-
     return senha;
   }
 
